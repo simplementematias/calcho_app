@@ -1,0 +1,51 @@
+name: calcho
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # --- Firebase ---
+  firebase_core: ^4.4.0
+  cloud_firestore: ^6.1.2
+  
+  # --- State Management (Riverpod Stable) ---
+  flutter_riverpod: ^3.1.0
+  riverpod_annotation: ^4.0.0
+  
+  # --- Code Generation & Data Class ---
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  equatable: ^2.0.7
+  
+  # --- Utils ---
+  dartz: ^0.10.1
+  get_it: ^9.2.0
+  google_maps_flutter: ^2.10.0
+  
+  # --- UI Icons ---
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  # --- Generators (The Factory) ---
+  build_runner: ^2.4.14
+  riverpod_generator: ^4.0.0+1
+  freezed: ^3.2.3
+  json_serializable: ^6.9.0
+  
+  # --- Linters ---
+  flutter_lints: ^6.0.0
+  custom_lint: ^0.8.1
+  riverpod_lint: ^3.1.0
+
+flutter:
+  uses-material-design: true
+
