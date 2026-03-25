@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../domain/entities/venue.dart';
 import '../providers/venues_provider.dart';
+import '../widgets/venue_detail_sheet.dart';
 
 class VenuesMapScreen extends ConsumerWidget {
   const VenuesMapScreen({super.key});
@@ -31,7 +32,7 @@ class VenuesMapScreen extends ConsumerWidget {
 
     final markers = venuesAsync.when(
       loading: () => <Marker>{},
-      error: (_, __) => <Marker>{},
+      error: (_, _) => <Marker>{},
       data: (venues) => venues
           .map(
             (venue) => Marker(
@@ -40,13 +41,13 @@ class VenuesMapScreen extends ConsumerWidget {
                 venue.location.latitude,
                 venue.location.longitude,
               ),
-              onTap: () => _showVenueBottomSheet(context, venue),
+              onTap: () => _showVenueBottomSheet(context, ref, venue.id),
             ),
           )
           .toSet(),
     );
 
-    final isLoading = venuesAsync.isLoading;
+    final isLoading = venuesAsync.isLoading && !venuesAsync.hasValue;
     final hasError = venuesAsync.hasError;
 
     return Scaffold(
@@ -104,26 +105,37 @@ class VenuesMapScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _showVenueBottomSheet(BuildContext context, Venue venue) {
+  Future<void> _showVenueBottomSheet(
+    BuildContext context,
+    WidgetRef ref,
+    String venueId,
+  ) {
+    final selectedVenue = ref.read(venueByIdProvider(venueId));
+    if (selectedVenue == null) {
+      return Future<void>.value();
+    }
+
     return showModalBottomSheet<void>(
       context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.35),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
       builder: (context) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  venue.name,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 8),
-                Text(venue.addressLine),
-              ],
-            ),
-          ),
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.56,
+          minChildSize: 0.4,
+          maxChildSize: 0.86,
+          builder: (_, _) {
+            return VenueDetailSheet(
+              venue: selectedVenue,
+              key: ValueKey('venue-sheet-${selectedVenue.id}'),
+            );
+          },
         );
       },
     );

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "610923748533",
+    "project_id": "calcho-8bd47",
+    "storage_bucket": "calcho-8bd47.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610923748533:android:6a4299dafd21822885f2fc",
+        "android_client_info": {
+          "package_name": "com.sazzon.calcho"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtJcjmQhJ6c2qENgQUG45Cvf_1L9Oa1NE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -28,6 +28,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        manifestPlaceholders["MAPS_API_KEY"] =
+            (project.findProperty("MAPS_API_KEY") as String?) ?: "TU_API_KEY_AQUI"
     }
 
     buildTypes {
@@ -41,4 +43,9 @@ android {
 
 flutter {
     source = "../.."
+}
+
+// Enable Firebase Android resources only when the config file exists.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
 }
